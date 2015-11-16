@@ -54,7 +54,7 @@ exports.removeClass = function(obj, cls) {
 /**
  * 客户端检测
  * @return {object} 
- * {}
+ * 
  **/
 exports.isMobile = function(){
 	var ua = navigator.userAgent,

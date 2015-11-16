@@ -14,7 +14,6 @@
 
 define(['baseTools'],function(baseTools){
 
-console.log(baseTools);
 var animation = function(dom,props,speed,callback,tween){
 	this.dom = dom;
 	this.props = props;
@@ -26,7 +25,7 @@ var animation = function(dom,props,speed,callback,tween){
 	
 	this.tween = tween ||  function(t, b, c, d) {
 		return t * c / d + b;
-	};
+	};  //默认为linear
 	
 	this.fps = 36;
 	this.timer = undefined;
@@ -91,4 +90,4 @@ pt.__enterFrame = function(){
 }
 
 return animation;
-}) 
+})
