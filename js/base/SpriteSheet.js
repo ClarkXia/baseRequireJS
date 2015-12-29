@@ -113,7 +113,10 @@ p._parseData = function(data) {
 				this._loadCount++;
 				this.complete = false;
 				(function(o) { img.onload = function() { o._handleImageLoad(); } })(this);
-				
+			}else{
+				//图片缓存，不需要重新加载情况
+				this._loadCount++;
+				this._handleImageLoad();
 			}
 		}
 	}
