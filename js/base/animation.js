@@ -16,7 +16,7 @@ define(['baseTools'],function(baseTools){
 
 var animation = function(dom,props,speed,callback,tween){
 	this.dom = dom;
-	this.props = props;
+	
 	this.speed = speed || 1000;
 	
 	if (typeof callback == "function"){
@@ -30,6 +30,12 @@ var animation = function(dom,props,speed,callback,tween){
 	this.fps = 36;
 	this.timer = undefined;
 	this.frames = Math.ceil(this.speed * this.fps/1000);
+	this.setProps(props);
+}
+
+var pt = animation.prototype;
+pt.setProps = function(props){
+	this.props = props;
 	this.initstate = {};
 	for (var prop in this.props) {
 		this.initstate[prop] = {
@@ -38,8 +44,6 @@ var animation = function(dom,props,speed,callback,tween){
 		};
 	}
 }
-
-var pt = animation.prototype;
 pt.start = function(){
 	this.currentFrame = 0;
 	this.__nextFrame();

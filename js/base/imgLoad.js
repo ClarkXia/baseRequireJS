@@ -40,6 +40,29 @@ define(function(){
 			}))
 		}
 	};
+	exports.loadImageInOrder = function (srcs, callback) {
+        var srcs = srcs || [];
+        var len = srcs.length;
+        if (len < 1) return;
+        //记录加载长度
+        var loadNum = 0;
+        var loading_p = 0;
+        var loading = function () {
+            if (loadNum < len) {
+                loading_p = Math.ceil(100 * loadNum / len);
+                var _src = srcs[loadNum];
+                exports.loadImage(_src, function (img) {
+                    loadNum++;
+                    callback && callback(loading_p);
+                    loading();
+                });
+            } else {
+                loading_p = '100';
+                callback && callback(loading_p);
+            };
+        }
+        loading();
+    };
 	
 	return exports;
 })

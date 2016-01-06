@@ -2,11 +2,11 @@
  * @params {ctx} 画布环境
  * @params {spriteSheet} 基于SpriteSheet输出的帧动画数据
  * @params {frameOrAnimation} 开始运行的动画片段，存在于SpriteSheet的_animations列表中
- *
+ * @params {cb} 动画执行结束的回调函数
  **/
 define(function(){
 
-function Sprite(ctx, spriteSheet, frameOrAnimation) {
+function Sprite(ctx, spriteSheet, frameOrAnimation, cb) {
 	if (ctx == null){return;}
 	this.ctx = ctx;
 	
@@ -26,6 +26,7 @@ function Sprite(ctx, spriteSheet, frameOrAnimation) {
 	//每秒帧数
 	this.framerate = 0;
 	
+	this.callback = cb || function(){};
 	/**
 	 * private
 	 **/
@@ -85,7 +86,9 @@ p.gotoAndStop = function(frameOrAnimation) {
  **/
 p.advance = function(time) {
 	//同时考虑spriteSheet所需图片是否全部 加载完成
-	if (!this.paused && this.spriteSheet.complete == true) {
+	//if (!this.paused && this.spriteSheet.complete == true) {
+		console.log(this.spriteSheet.complete);
+	if (!this.paused){
 		var fps = this.framerate || this.spriteSheet.framerate;
 		var t = (fps && time != null) ? time/(1000/fps) : 1;
 		this._normalizeFrame(t);
@@ -113,6 +116,7 @@ p._normalizeFrame = function(frameDelta) {
 				return this._goto(next, frameDelta - (l - animFrame) / speed);
 			} else {
 				// end.
+				this.callback();
 				this.paused = true;
 				animFrame = animation.frames.length - 1;
 			}
@@ -127,7 +131,6 @@ p._normalizeFrame = function(frameDelta) {
 		if (frame >= l && l > 0) {
 			// looped.
 			if ((this._currentFrame -= l) >= l) { return this._normalizeFrame(); }
-			
 		}
 	}
 	frame = this._currentFrame | 0;
