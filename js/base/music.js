@@ -90,25 +90,6 @@ define(function(){
 				playIcon.className = 'musiccontrol on';
 			}
 		}
-
-		return {
-			stop : function(){
-				if (audioStatus){
-					audioStatus = false;
-					audioElement.pause();
-					audioElement.currentTime = 0.0;
-					playIcon.className = 'musiccontrol off';
-				}
-			},
-			play : function(){
-				if (!audioStatus){
-					audioElement.style.display = "block";
-					audioStatus = true;
-					audioElement.play();
-					playIcon.className = 'musiccontrol on';
-				}
-			}
-		}
 	}
 	return music;
 })

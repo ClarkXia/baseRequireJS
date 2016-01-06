@@ -7,7 +7,6 @@ define(function(){
 	var exports = {},
 		numberList = new Array([1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1], [0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0], [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1], [1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1], [1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1], [1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1], [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1], [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1]),  //canvas数字点阵
 		canvas = document.createElement("canvas"),  //canvas主画布
-		progress = document.createElement("span"),
 		ctx = canvas.getContext('2d'),
 		maskCanvas = document.createElement('canvas'),  //canvas遮罩缓存
 		maskContext = maskCanvas.getContext('2d'),
@@ -23,17 +22,6 @@ define(function(){
 		canvas.height = bodyHeight;
 		maskCanvas.width = bodyWith;
 		maskCanvas.height = bodyHeight;
-		//设置绝对定位
-		canvas.style.position = "absolute";
-		canvas.style.top = 0;
-		canvas.style.left = 0;
-		canvas.style.zIndex = 999;
-		
-		//数字显示
-		progress.style.position = "absolute";
-		progress.style.zIndex = 9999;
-		progress.style.fontSize = "0px";
-
 	function getNumber(value){   //获取数字点阵值
 		return numberList[value];
 	}
@@ -86,7 +74,6 @@ define(function(){
 	}
 	
 	exports.setProgress = function(value){
-		progress.innerText = value;
 		var num_0 = "",
 		num_1, num_2, i;
 		
@@ -117,13 +104,7 @@ define(function(){
 		step = params.step || canvas.width * 0.5 / 15;  
 		screenX = (canvas.width - step * 13) / 2;  
 		screenY = (canvas.height - step * 5) / 2;  
-		
-		progress.style.color = color;
-		if (typeof params["debug"] != "undefined" && params["debug"] == true){
-			progress.style.fontSize = "24px";
-		}
 		document.body.appendChild(canvas);
-		document.body.appendChild(progress);
 		exports.setProgress(0);
 	}
 	

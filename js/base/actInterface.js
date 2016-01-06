@@ -24,16 +24,16 @@ define(['jsonp'],function(jsonp){
 		loadingElement.style.width = "100%";
 		loadingElement.style.height = "100%";
 		loadingElement.style.display = "none";
-		loadingElement.style.zIndex = "998";
+		loadingElement.style.zIndex = "999";
 		loadingElement.style.left = "0px";
 		loadingElement.style.top = "0px";
-		loadingElement.style.position = "absolute";
 		document.body.appendChild(loadingElement);
 		setLoading = true;
 	}
 	
 	function setPostFlag(value){
 		flagQueue.push(value);
+		console.log(flagQueue);
 	}
 	
 	function searchQueue(value){
@@ -85,11 +85,6 @@ define(['jsonp'],function(jsonp){
 	exports.checkInfo = function(data,cb,params){
 		postRequest("c-"+data.act_id,"http://act.city.sina.com.cn/interface/activity/json_get_field_data.php",data,cb,params);
 	}
-	exports.showLoading = function(){
-		showLoading();
-	}
-	exports.hideLoading = function(){
-		!!loadingElement && (loadingElement.style.display = 'none');
-	}
+	
 	return exports;
 })
